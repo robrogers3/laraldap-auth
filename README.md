@@ -1,37 +1,57 @@
-# laradauth
+# laraldap-auth: Authenticate against
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
+
 Drop in replacement for authenticating against your ldap service.
+
+Supporting OpenLDAP, 
 
 ## Install
 
 Via Composer
 
 ``` bash
-$ composer require robrogers3/laradauth
+$ composer require robrogers3/laraldap-auth
 ```
 
 ## Usage
-Add this to app.php
+Add this to app.php in the services providers list
+
 ```php
 robrogers3\laradauth\ServiceProvider::class,
 ```
+
+
 Update config/auth.php 
 ``` php
+
     'providers' => [
         'users' => [
-            'driver' => 'ldap',
-            'model' => App\User::class,
-            'host' => 'cs-ds1-1.home.crowdstar.com',
-            'domain' => 'cn=users,dc=cs-ds1-1,dc=home,dc=crowdstar,dc=com',
+           'driver' => 'ldap',
+           'model' => App\User::class,
+           'host' => 'cs-ds1-1.home.crowdstar.com',
+           'domain' => 'crowdstar.com',
+           'base_dn' => 'cn=users,dc=cs-ds1-1,dc=home,dc=crowdstar,dc=com',
+           'user_dn' => 'uid'
         ],
     ],
 
 ```
+
+Create your database, and specify database connection options in .env and/or config/database.php
+
+Use Artisan to make auth
+
+Run:
+```bash
+php artisan make:auth
+```
+
+You may be done. Go ahead and login.
 
 ## Change log
 
@@ -40,7 +60,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 ## Testing
 
 ``` bash
-$ composer test
+$ composer test me not
 ```
 
 ## Contributing

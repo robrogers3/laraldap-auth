@@ -1,15 +1,16 @@
 {
-    "name": "robrogers3/laradauth",
+    "name": "robrogers3/laraldap-auth",
     "type": "library",
     "description": "ldap authentication for laravel",
     "keywords": [
         "robrogers3",
-        "laradauth",
+        "laraldap-auth",
         "laravel",
         "ldap",
-        "authentication"
+        "authentication",
+        ""
     ],
-    "homepage": "https://github.com/robrogers3/laradauth",
+    "homepage": "https://github.com/robrogers3/laraldap-auth",
     "license": "MIT",
     "authors": [
         {
@@ -17,6 +18,12 @@
             "email": "robrogers@me.com",
             "homepage": "https://github.com/robrogers3",
             "role": "Developer"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": ""
         }
     ],
     "require": {

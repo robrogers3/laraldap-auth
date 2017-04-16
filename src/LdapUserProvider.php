@@ -7,11 +7,7 @@ use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 use Illuminate\Contracts\Auth\UserProvider as UserProviderContract;
 use RuntimeException;
 
-/**
- * @author  Lucas Vasconcelos <lucas@vscn.co>
- * @package LSV\LDAP
- */
-class UserProvider implements UserProviderContract
+class LdapUserProvider implements UserProviderContract
 {
     /**
      * The hasher implementation.
@@ -40,21 +36,33 @@ class UserProvider implements UserProviderContract
      * @var string
      */
     protected $domain;
+    /**
+     * @var
+     */
+    private $base_dn;
+    /**
+     * @var
+     */
+    private $user_dn;
 
     /**
      * Create new hybrid user provider
      *
-     * @param  \Illuminate\Contracts\Hashing\Hasher  $hasher
-     * @param  string  $model
+     * @param  \Illuminate\Contracts\Hashing\Hasher $hasher
+     * @param  string $model
      * @param  string $host
-     * @return void
+     * @param string $domain
+     * @param string $basedn
+     * @param string $userdn
      */
-    public function __construct(HasherContract $hasher, $model, $host, $domain)
+    public function __construct(HasherContract $hasher, $model, $host, $domain, $base_dn, $user_dn)
     {
         $this->hasher = $hasher;
         $this->model = $model;
         $this->host = $host;
         $this->domain = $domain;
+        $this->base_dn = $base_dn;
+        $this->user_dn = $user_dn;
     }
 
     /**
@@ -123,23 +131,26 @@ class UserProvider implements UserProviderContract
         if (empty($credentials)) {
             return null;
         }
+
         $query = $this->createModel()->newQuery();
 
-        // Append the domain name to user's credentials.
-        // That allow the user to type just the username.
-        /*        if (false === strpos($credentials['email'], '@')) {
-                    $credentials['email'] .= '@' . $this->domain;
-                }*/
+        // Append the domain name to user's credentials if not set
+        // stores the email in the DB for potential usage like notifications.
+        if (false === strpos($credentials['email'], '@')) {
+            $credentials['email'] .= '@' . $this->domain;
+        }
 
         $query->where('email', $credentials['email']);
 
-        $user = $query->first();
-        if ($user) {
-            return $user;
-        }
-        $user = User::make($credentials);
+        $model = $query->first();
 
-        return $user;
+        if ($model) {
+            return $model;
+        }
+
+        $model = $this->makeModel($credentials);
+
+        return $model;
     }
 
     /**
@@ -151,9 +162,8 @@ class UserProvider implements UserProviderContract
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
-        // If user can't be authenticated by LDAP,
-        // try the password stored into 'users' table.
-        if (! $this->checkLdapCredentials($user, $credentials)) {
+        //TODO determine if we even want to store the passowrd.
+        if (! $this->authenticate($user, $credentials)) {
 
             $plain = $credentials['password'];
 
@@ -169,24 +179,37 @@ class UserProvider implements UserProviderContract
      * @param  array           $credentials
      * @return bool
      */
-    public function checkLdapCredentials(Authenticatable $user, array $credentials)
+    public function authenticate(Authenticatable $user, array $credentials)
     {
 
-        $handler = @ldap_connect($this->host);
+        $handler = ldap_connect($this->host);
 
         if (! $handler) {
             throw new RuntimeException("Connection fail! Check your server address: '{$this->host}'.");
         }
 
-        @ldap_set_option($handler, LDAP_OPT_PROTOCOL_VERSION, 3);
+        try {
+            ldap_set_option($handler, LDAP_OPT_PROTOCOL_VERSION, 3);
+        } catch (\ErrorException $e) {
+            ;
+        }
 
         $username = strtok($user->email, '@');
+
         $rdn = $this->makeRdn($username);
 
-        $bind = @ldap_bind($handler, $rdn, $credentials['password']);
+        try {
+            $bind = ldap_bind($handler, $rdn, $credentials['password']);
+        } catch (\ErrorException $e) {
+            $bind = false;
+        }
 
-        @ldap_close($handler);
-        unset($handler);
+        if ($handler) {
+            ldap_close($handler);
+
+            unset($handler);
+        }
+
         if ($bind) {
             $user->save();
         }
@@ -201,8 +224,23 @@ class UserProvider implements UserProviderContract
      */
     protected function makeRdn($username)
     {
-        $parts = explode('.', $this->domain);
         //uid=USERNAME,cn=users,dc=HOSTNAME,dc=DOMAIN,dc=com
-        return sprintf('uid=%s,%s', $username, $this->domain);
+        //cn=USERNAME ...
+        return sprintf('%s=%s,%s', $this->user_dn, $username, $this->base_dn);
+    }
+
+    private function makeModel($credentials)
+    {
+        $model  = $this->createModel();
+
+        $name = ucwords(str_replace('.', ' ',explode('@', $credentials['email'])[0]));
+
+        $attributes = array_merge($credentials, ['name' => $name]);
+
+        $model->fill(
+            $attributes
+        );
+
+        return $model;
     }
 }
