@@ -20,12 +20,6 @@
             "role": "Developer"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": ""
-        }
-    ],
     "require": {
         "php" : "~5.6|~7.0",
         "illuminate/support": "5.3.* || 5.4.*"
