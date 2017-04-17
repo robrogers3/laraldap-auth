@@ -5,6 +5,7 @@ namespace robrogers3\laradauth;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 use Illuminate\Contracts\Auth\UserProvider as UserProviderContract;
+use Illuminate\Support\Facades\Hash;
 use RuntimeException;
 
 class LdapUserProvider implements UserProviderContract
@@ -234,6 +235,8 @@ class LdapUserProvider implements UserProviderContract
         $model  = $this->createModel();
 
         $name = ucwords(str_replace('.', ' ',explode('@', $credentials['email'])[0]));
+
+        $credentials['password'] = Hash::make($credentials['password']);
 
         $attributes = array_merge($credentials, ['name' => $name]);
 

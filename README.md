@@ -28,7 +28,6 @@ robrogers3\laradauth\LdapServiceProvider::class,
 
 Update config/auth.php 
 ``` php
-
     'providers' => [
         'users' => [
            'driver' => 'ldap',
@@ -50,6 +49,12 @@ Run:
 ```bash
 php artisan make:auth
 ```
+Publish Views so you can't register!
+
+```bash
+php artisan vendor:publish --force #force cause we override those in make auth.
+```
+
 
 You may be done. Go ahead and login.
 
