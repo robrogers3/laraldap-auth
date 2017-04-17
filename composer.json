@@ -7,8 +7,7 @@
         "laraldap-auth",
         "laravel",
         "ldap",
-        "authentication",
-        ""
+        "authentication"
     ],
     "homepage": "https://github.com/robrogers3/laraldap-auth",
     "license": "MIT",
@@ -50,6 +49,5 @@
     },
     "config": {
         "sort-packages": true
-    },
-    "minimum-stability": "dev"
+    }
 }
