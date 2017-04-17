@@ -22,7 +22,7 @@ $ composer require robrogers3/laraldap-auth
 Add this to app.php in the services providers list
 
 ```php
-robrogers3\laradauth\LdapServiceProvider::class,
+robrogers3\laradauth\LdapAuthServiceProvider::class,
 ```
 
 
