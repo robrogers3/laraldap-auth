@@ -6,7 +6,7 @@
 [![Total Downloads][ico-downloads]][link-downloads]
 
 
-Drop in replacement for authenticating against your ldap service.
+Drop in replacement for Laravel authentication against your ldap service.
 
 Supporting OpenLDAP, 
 
