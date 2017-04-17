@@ -86,17 +86,17 @@ If you discover any security related issues, please email robrogers@me.com inste
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/robrogers3/laradauth.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/robrogers3/laraldap-auth.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/robrogers3/laradauth/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/robrogers3/laradauth.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/robrogers3/laradauth.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/robrogers3/laradauth.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/robrogers3/laraldap-auth.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/robrogers3/laraldap-auth.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/robrogers3/laraldap-auth.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/robrogers3/laradauth
-[link-travis]: https://travis-ci.org/robrogers3/laradauth
+[link-packagist]: https://packagist.org/packages/robrogers3/laraldap-auth
+[link-travis]: https://travis-ci.org/robrogers3/laraldap-auth
 [link-scrutinizer]: https://scrutinizer-ci.com/g/robrogers3/laradauth/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/robrogers3/laradauth
-[link-downloads]: https://packagist.org/packages/robrogers3/laradauth
+[link-code-quality]: https://scrutinizer-ci.com/g/robrogers3/laraldap-auth
+[link-downloads]: https://packagist.org/packages/robrogers3/laraldap-auth
 [link-author]: https://github.com/robrogers3
 [link-contributors]: ../../contributors
