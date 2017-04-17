@@ -27,14 +27,15 @@ robrogers3\laradauth\LdapAuthServiceProvider::class,
 
 
 Update config/auth.php 
+
 ``` php
     'providers' => [
         'users' => [
            'driver' => 'ldap',
            'model' => App\User::class,
-           'host' => 'cs-ds1-1.home.crowdstar.com',
-           'domain' => 'crowdstar.com',
-           'base_dn' => 'cn=users,dc=cs-ds1-1,dc=home,dc=crowdstar,dc=com',
+           'host' => 'host.example..com',
+           'domain' => 'example.com',
+           'base_dn' => 'cn=users,dc=cs-ds1-1,dc=home,dc=example,dc=com',
            'user_dn' => 'uid'
         ],
     ],
