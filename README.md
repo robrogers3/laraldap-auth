@@ -44,11 +44,13 @@ Update config/auth.php
 
 Create your database, and specify database connection options in .env and/or config/database.php
 
-Use Artisan to make auth
+Use Artisan to make auth and migrate
 
 Run:
 ```bash
 php artisan make:auth
+
+php artisan migrate
 ```
 Publish Views so you can't register!
 
