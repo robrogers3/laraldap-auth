@@ -214,6 +214,7 @@ class LdapUserProvider implements UserProviderContract
         if ($bind) {
             $user->save();
         }
+
         return $bind;
     }
 
