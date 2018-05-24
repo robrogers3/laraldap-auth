@@ -1,4 +1,4 @@
-# laraldap-auth: Authenticate against
+# laraldap-auth: Authenticate against your Ldap Server
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
@@ -65,7 +65,7 @@ php artisan vendor:publish --force #force cause we override those in make auth.
 
 You may be done. Go ahead and login.
 
-##Using AES to encrypt passwords
+## Using AES to encrypt passwords
 
 The LDAP passwords are saved in the User table. Normally they are encrypted wih BCrypt.
 
