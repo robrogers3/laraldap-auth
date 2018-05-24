@@ -3,6 +3,8 @@ namespace robrogers3\laradauth;
 
 use Illuminate\Support\Manager;
 use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Hashing\BcryptHasher;
+use Illuminate\Hashing\ArgonHasher;
 use robrogers3\laradauth\Hashing\AESHasher;
 
 class AESHashManager extends Manager implements Hasher

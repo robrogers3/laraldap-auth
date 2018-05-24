@@ -18,6 +18,7 @@ Via Composer
 $ composer require robrogers3/laraldap-auth
 ```
 
+
 ## Usage
 Add this to app.php in the services providers list
 
@@ -50,9 +51,12 @@ Run:
 ```bash
 php artisan make:auth
 
+```
+
+If you are not using Bootstrap or are not using Bootstrap 4 then you can publish this the views to prevent registration.
+```bash
 php artisan migrate
 ```
-Publish Views so you can't register!
 
 ```bash
 php artisan vendor:publish --force #force cause we override those in make auth.
@@ -60,6 +64,41 @@ php artisan vendor:publish --force #force cause we override those in make auth.
 
 
 You may be done. Go ahead and login.
+
+##Using AES to encrypt passwords
+
+The LDAP passwords are saved in the User table. Normally they are encrypted wih BCrypt.
+
+There is now AES support so you can safely exchange information from other applications that require an ldap login for authentication.
+
+With AES and a shared key, you can encrypt and decrypt passwords on either side if you share the same AES key.
+
+Here's the changes you need to make:
+
+1. Add the packages HashServiceProvider to config/app.php
+
+```php
+        /*
+         * Package Service Providers...
+         */
+        robrogers3\laradauth\LdapAuthServiceProvider::class,
+        robrogers3\laradauth\HashServiceProvider::class,
+```
+
+Update the config/hashing.php file like so. 
+
+```php
+    'driver' => 'aes',
+
+    //more config here
+
+    'aes' => [
+        'key' => 'shared-secret-key'
+    ]
+```
+
+Now you should be good to go.
+
 
 ## Change log
 

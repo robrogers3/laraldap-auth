@@ -3,6 +3,8 @@
 namespace robrogers3\laradauth\Hashing;
 
 use phpseclib\Crypt\AES;
+use Illuminate\Hashing\BcryptHasher;
+use Illuminate\Hashing\ArgonHasher;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 
 
