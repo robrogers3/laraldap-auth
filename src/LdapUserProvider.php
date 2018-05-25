@@ -233,13 +233,22 @@ class LdapUserProvider implements UserProviderContract
 
     private function makeModel($credentials)
     {
+
         $model  = $this->createModel();
 
-        $name = ucwords(str_replace('.', ' ',explode('@', $credentials['email'])[0]));
+        $userName = explode('@', $credentials['email'])[0];
+
+        $name = ucwords(str_replace('.', ' ', $userName));;
 
         $credentials['password'] = Hash::make($credentials['password']);
 
-        $attributes = array_merge($credentials, ['name' => $name]);
+        $attributes = ['name' => $name];
+
+        if (config('services.ldap.create-user-name')) {
+            $attributes['user_name'] = $userName;
+        }
+
+        $attributes = array_merge($attributes, $credentials);
 
         $model->fill(
             $attributes
