@@ -8,7 +8,7 @@
 
 Drop in replacement for Laravel authentication against your ldap service.
 
-Supporting OpenLDAP, 
+Supporting OpenLDAP.
 
 ## Install
 
@@ -27,7 +27,7 @@ robrogers3\laradauth\LdapAuthServiceProvider::class,
 ```
 
 
-Update config/auth.php 
+Update config/auth.php
 
 ``` php
     'providers' => [
@@ -62,7 +62,6 @@ php artisan migrate
 php artisan vendor:publish --force #force cause we override those in make auth.
 ```
 
-
 You may be done. Go ahead and login.
 
 ## Using AES to encrypt passwords
@@ -85,7 +84,7 @@ Here's the changes you need to make:
         robrogers3\laradauth\HashServiceProvider::class,
 ```
 
-Update the config/hashing.php file like so. 
+Update the config/hashing.php file like so.
 
 ```php
     'driver' => 'aes',
@@ -94,6 +93,20 @@ Update the config/hashing.php file like so.
 
     'aes' => [
         'key' => 'shared-secret-key'
+    ]
+```
+
+Update your user database migration and add this column:
+
+```php
+            $table->string('user_name');
+```
+
+Then update your services.php config file, like so:
+
+```php
+    'ldap' => [
+        'create-user-name' => true
     ]
 ```
 
