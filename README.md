@@ -53,7 +53,7 @@ php artisan make:auth
 
 ```
 
-If you are not using Bootstrap or are not using Bootstrap 4 then you can publish this the views to prevent registration.
+If you are using Bootstrap 3 then you can publish the views to prevent user registration.
 ```bash
 php artisan migrate
 ```
